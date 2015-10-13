@@ -144,7 +144,15 @@
         function cleanup() {
             resizeHandler();
         }
-
+        resizeHandler =  function () {
+              $timeout(function () {
+                // Not always defined yet in IE so check
+                if (self.chartWrapper) {
+                  drawAsync();
+                }
+              });
+            };
+            $rootScope.$on('resizeMsg', resizeHandler);
         function draw() {
             if (!draw.triggered && (self.chart !== undefined)) {
                 draw.triggered = true;
